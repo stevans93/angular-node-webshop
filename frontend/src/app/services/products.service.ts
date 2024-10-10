@@ -4,16 +4,27 @@ import { Observable } from 'rxjs';
 import { PaginationParams, Products } from '../../types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
+  constructor(private apiService: ApiService) {}
 
-  constructor(private apiService: ApiService) { }
+  getProducts = (
+    url: string,
+    params: PaginationParams
+  ): Observable<Products> => {
+    return this.apiService.get(url, { params, responseType: 'json' });
+  };
 
-  getProducts(url: string, params: PaginationParams): Observable<Products> {
-    return this.apiService.get(url, {
-      params,
-      responseType: 'json',
-    });
-  } 
+  addProduct = (url: string, body: any): Observable<Products> => {
+    return this.apiService.post(url, body, {});
+  };
+
+  editProduct = (url: string, body: any): Observable<Products> => {
+    return this.apiService.put(url, body, {});
+  };
+
+  deleteProduct = (url: string): Observable<Products> => {
+    return this.apiService.delete(url, {});
+  };
 }
