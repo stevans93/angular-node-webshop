@@ -1,4 +1,12 @@
 <div class="column gap-1">
+  <button
+    type="button"
+    pButton
+    icone="pi pi-plus"
+    (click)="toggleAddPopup()"
+    label="Add Product"
+  ></button>
+
   <div class="row wrap gap-1 space-between">
     <app-product
       *ngFor="let product of products"
@@ -14,3 +22,16 @@
     [rowsPerPageOptions]="[5, 10, 20]"
   />
 </div>
+
+<app-edit-popup
+  [product]="selectedProduct"
+  [display]="displayEditPopup"
+  (confirm)="onConfirmEdit($event)"
+  header="Edit Product"
+></app-edit-popup>
+
+<app-edit-popup
+  [display]="displayAddPopup"
+  (confirm)="onConfirmAdd($event)"
+  header="Add Product"
+></app-edit-popup>
