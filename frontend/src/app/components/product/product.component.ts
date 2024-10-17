@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Product } from '../../../types';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
@@ -24,6 +30,8 @@ import { ConfirmationService } from 'primeng/api';
 export class ProductComponent {
   constructor(private confirmationService: ConfirmationService) {}
 
+  @ViewChild('deleteButton') deleteButton: any;
+
   @Input() product!: Product;
   @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
@@ -34,6 +42,7 @@ export class ProductComponent {
 
   confirmDelete() {
     this.confirmationService.confirm({
+      target: this.deleteButton.nativeElement,
       message: 'Are you sure that you want to delete this product?',
       accept: () => {
         this.deleteProduct();
